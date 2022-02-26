@@ -49,9 +49,6 @@
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        },
         "laravel": {
             "providers": [
                 "BotMan\\BotMan\\BotManServiceProvider"
