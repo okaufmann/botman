@@ -303,6 +303,6 @@ trait HandlesConversations
         }
 
         $parameters[] = $conversation;
-        call_user_func_array($next, $parameters);
+        call_user_func_array($next, array_values($parameters));
     }
 }
