@@ -10,9 +10,8 @@ use RedisException;
 
 /**
  * @group integration
- * @group redis-insecure
  */
-class InsecureTest extends TestCase
+class RedisStorageTest extends TestCase
 {
     protected function setUp(): void
     {

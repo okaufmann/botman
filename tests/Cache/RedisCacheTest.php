@@ -1,18 +1,16 @@
 <?php
 
-namespace BotMan\BotMan\Tests\Cache\RedisCache;
+namespace BotMan\BotMan\Tests\Cache;
 
 use BotMan\BotMan\Cache\ArrayCache;
 use BotMan\BotMan\Cache\RedisCache;
 use PHPUnit\Framework\TestCase;
 use Redis;
-use RedisException;
 
 /**
  * @group integration
- * @group redis-secure
  */
-class SecureTest extends TestCase
+class RedisCacheTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -27,33 +25,14 @@ class SecureTest extends TestCase
 
         $redis = new Redis();
         $redis->connect($this->getRedisHost(), $this->getRedisPort());
-        $redis->auth('secret');
         $redis->eval($script);
         $redis->close();
     }
 
     /** @test */
-    public function valid_auth()
-    {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
-        $cache->put('foo', 'bar', 1);
-        static::assertTrue($cache->has('foo'));
-    }
-
-    /**
-     * @test
-     * @expectedException RedisException
-     */
-    public function invalid_auth()
-    {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'invalid');
-        $cache->put('foo', 'bar', 1);
-    }
-
-    /** @test */
     public function has()
     {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
+        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort());
         $cache->put('foo', 'bar', 1);
         static::assertTrue($cache->has('foo'));
     }
@@ -61,14 +40,14 @@ class SecureTest extends TestCase
     /** @test */
     public function has_not()
     {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
+        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort());
         static::assertFalse($cache->has('foo'));
     }
 
     /** @test */
     public function get_existing_key()
     {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
+        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort());
         $cache->put('foo', 'bar', 5);
         static::assertTrue($cache->has('foo'));
         static::assertEquals('bar', $cache->get('foo'));
@@ -77,15 +56,14 @@ class SecureTest extends TestCase
     /** @test */
     public function get_non_existing_key()
     {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
+        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort());
         static::assertNull($cache->get('foo'));
     }
 
     /** @test */
     public function pull_existing_key()
     {
-
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
+        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort());
         $cache->put('foo', 'bar', 5);
         static::assertTrue($cache->has('foo'));
         static::assertEquals('bar', $cache->pull('foo'));
@@ -96,7 +74,7 @@ class SecureTest extends TestCase
     /** @test */
     public function pull_non_existing_key()
     {
-        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort(), 'secret');
+        $cache = new RedisCache($this->getRedisHost(), $this->getRedisPort());
         static::assertNull($cache->pull('foo'));
     }
 
@@ -124,6 +102,6 @@ class SecureTest extends TestCase
      */
     protected function getRedisPort()
     {
-        return (int) ($_ENV['REDIS_PORT'] ?? 6380);
+        return (int) ($_ENV['REDIS_PORT'] ?? 6379);
     }
 }
