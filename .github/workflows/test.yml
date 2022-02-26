@@ -27,7 +27,7 @@ jobs:
                 ports:
                     - 6379:6379
 
-        name: P${{ matrix.php }} - L${{ matrix.laravel }} - Insecure
+        name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
