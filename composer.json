@@ -18,12 +18,12 @@
         "php": "^8.1",
         "symfony/http-foundation": "^6.0",
         "tightenco/collect": "^9.0",
-        "opis/closure": "^2.3 || ^3.0",
         "mpociot/pipeline": "^1.0.2",
         "react/socket": "~1.0",
         "spatie/macroable": "^2.0",
         "psr/container": "^2.0",
-        "spatie/ray": "^1.33"
+        "spatie/ray": "^1.33",
+        "laravel/serializable-closure": "^1.1"
     },
     "require-dev": {
         "codeigniter/framework": "~3.0",

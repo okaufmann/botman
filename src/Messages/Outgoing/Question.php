@@ -113,7 +113,7 @@ class Question implements JsonSerializable, WebAccess
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->toArray();
     }
